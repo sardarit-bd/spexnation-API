@@ -25,7 +25,7 @@ const generateEmailTemplate = (title, message, extra = "") => {
     <br><br>
     <p style="font-size: 13px; color: #666;">
       Best regards,<br>
-      <strong>Casa Viva Team</strong><br>
+      <strong>Spex Nation</strong><br>
     </p>
   </div>
   `;
