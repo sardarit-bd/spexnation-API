@@ -134,6 +134,37 @@ const forgotPassword = catchAsync(
     }
 );
 
+const verifyCode = catchAsync(
+    async (req, res, next) => {
+        const { email } = req.user
+        const code = req.body.code
+        await AuthServices.verifyCode({ email, code })
+
+        sendResponse(res, {
+            success: true,
+            statusCode: httpStatus.OK,
+            message: "Code verified successfully.",
+            data: null
+        })
+
+    }
+);
+
+const sendVerifyCode = catchAsync(
+    async (req, res, next) => {
+        const { email } = req.user
+        await AuthServices.sendVerifyCode({ email })
+
+        sendResponse(res, {
+            success: true,
+            statusCode: httpStatus.OK,
+            message: "Verification code sent successfully.",
+            data: null
+        })
+
+    }
+);
+
 const resetPassword = catchAsync(
     async (req, res, next) => {
         await AuthServices.resetPassword(req.body, req.user)
@@ -155,5 +186,7 @@ export const AuthControllers = {
     changePassword,
     forgotPassword,
     resetPassword,
-    deleteMe
+    deleteMe,
+    sendVerifyCode,
+    verifyCode
 };

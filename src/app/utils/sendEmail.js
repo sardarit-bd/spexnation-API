@@ -78,3 +78,29 @@ export const sendResetPasswordEmail = async (email, resetUrl) => {
         throw new Error("Failed to send password reset email");
     }
 };
+
+
+export const sendVerifyCodeEmail = async (email, verifyCode) => {
+    try {
+        const subject = "Verify Your Email";
+        const message = `
+      We received a request to verify your email for your 
+      <strong>Spex Nation</strong> account.
+
+      <br><br>
+      Your verification code is: <strong>${verifyCode}</strong>
+    `;
+
+        const mailOptions = {
+            from: `"${process.env.PROJECT_NAME || "Spex Nation"}" <${process.env.EMAIL_USERNAME}>`,
+            to: email,
+            subject,
+            html: generateEmailTemplate(subject, message),
+        };
+
+        await transporter.sendMail(mailOptions);
+    } catch (error) {
+        console.error("Verify code email error:", error);
+        throw new Error("Failed to send verify code email");
+    }
+};

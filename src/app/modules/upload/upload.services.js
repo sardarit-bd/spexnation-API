@@ -10,7 +10,7 @@ cloudinary.config({
 });
 
 // Upload single file
-const uploadSingleFile = (fileBuffer, folder = 'properties', resourceType = 'image') => {
+const uploadSingleFile = (fileBuffer, folder = 'glass', resourceType = 'image') => {
   return new Promise((resolve, reject) => {
     const uploadStream = cloudinary.uploader.upload_stream(
       {
@@ -40,7 +40,7 @@ const uploadSingleFile = (fileBuffer, folder = 'properties', resourceType = 'ima
 };
 
 // Upload multiple files
-const uploadMultipleFiles = async (files, folder = 'properties') => {
+const uploadMultipleFiles = async (files, folder = 'glass') => {
   const uploadPromises = files.map(file => 
     uploadSingleFile(file.buffer, folder, file.mimetype.startsWith('image') ? 'image' : 'raw')
   );
@@ -50,7 +50,7 @@ const uploadMultipleFiles = async (files, folder = 'properties') => {
 
 // Delete file from Cloudinary
 const deleteFile = async (publicId, fileType = 'image') => {
-const id = 'properties/' + publicId
+const id = 'glass/' + publicId
 const resourceType = fileType === 'pdf' ? 'raw' : 'image';
   try {
     const result = await cloudinary.uploader.destroy(id, {
