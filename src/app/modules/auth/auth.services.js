@@ -3,7 +3,7 @@ import AppError from "../../errorHelpers/AppError.js";
 import httpStatus from 'http-status-codes'
 import bcryptjs from "bcryptjs";
 import { createUserTokens } from "../../utils/userTokens.js";
-import { Owner, Tenant, User } from "./auth.model.js";
+import { User } from "./auth.model.js";
 import { envVars } from "../../config/env.js";
 import { sendResetPasswordEmail } from "../../utils/sendEmail.js";
 import jwt from 'jsonwebtoken'
@@ -27,16 +27,6 @@ const createUser = async (payload) => {
     ...rest,
   });
 
-  if (user.role === 'tenant') {
-    await Tenant.create({
-      user: user._id
-    })
-  }
-  if (user.role === 'owner') {
-    await Owner.create({
-      user: user._id
-    })
-  }
   const userObj = user.toObject();
   delete userObj.password;
   return userObj;
