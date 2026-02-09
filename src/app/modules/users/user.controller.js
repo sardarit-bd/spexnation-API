@@ -17,19 +17,7 @@ const updateProfile = catchAsync(
     }
 );
 
-const verifyUser = catchAsync(
-    async (req, res, next) => {
-        const userId = req.body?.user
-        const user = await UserServices.verifyUser(userId);
 
-        sendResponse(res, {
-            statusCode: httpStatus.CREATED,
-            success: true,
-            message: "The user is now verified!",
-            data: user,
-        });
-    }
-);
 const getProfile = catchAsync(
     async (req, res, next) => {
         const verifiedToken = req.user;
@@ -61,6 +49,5 @@ const getAllUsers = catchAsync(
 export const UserControllers = {
    updateProfile,
    getProfile,
-   getAllUsers,
-   verifyUser
+   getAllUsers
 };

@@ -6,11 +6,11 @@ import { Role } from "../auth/auth.model.js";
 
 const router = Router();
 
-router.patch("/update-profile", checkAuth(Role.OWNER, Role.TENANT, Role.ADMIN, Role.SUPER_ADMIN), UserControllers.updateProfile);
-router.patch("/verification", checkAuth(Role.ADMIN, Role.SUPER_ADMIN), UserControllers.verifyUser);
+router.patch("/update-profile", checkAuth(Role.CUSTOMER, Role.STUFF, Role.ADMIN, Role.SUPER_ADMIN), UserControllers.updateProfile);
 
-router.get('/profile', checkAuth(Role.OWNER, Role.TENANT, Role.ADMIN, Role.SUPER_ADMIN), UserControllers.getProfile);
-router.get('/users', UserControllers.getAllUsers)
+
+router.get('/profile', checkAuth(Role.CUSTOMER, Role.STUFF, Role.ADMIN, Role.SUPER_ADMIN), UserControllers.getProfile);
+router.get('/users', checkAuth(Role.ADMIN, Role.SUPER_ADMIN), UserControllers.getAllUsers)
 
 
 export const UsersRoutes = router;

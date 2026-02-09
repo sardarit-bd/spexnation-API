@@ -17,19 +17,7 @@ const updateProfile = async (userId, payload) => {
     return true
 };
 
-const verifyUser = async (userId) => {
-    const isUserExist = await User.findById(userId);
 
-    if (!isUserExist) {
-        throw new AppError(httpStatus.NOT_FOUND, "User Not Found");
-    }
-
-
-    await User.findByIdAndUpdate(userId, {
-        verified: true
-    });
-    return true
-};
 const getProfile = async (userId) => {
     const user = await User.findById(userId).select("-password");
 
@@ -40,7 +28,7 @@ const getProfile = async (userId) => {
     return user;
 };
 
-const getAllUsers = async (userId) => {
+const getAllUsers = async () => {
     const usersWithDocuments = await User.find().select("-password");
 
     if (!usersWithDocuments) {
@@ -51,6 +39,5 @@ const getAllUsers = async (userId) => {
 export const UserServices = {
     updateProfile,
     getProfile,
-    verifyUser,
     getAllUsers
 };

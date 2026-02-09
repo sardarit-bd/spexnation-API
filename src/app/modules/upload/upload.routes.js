@@ -2,8 +2,7 @@ import express from 'express';
 
 import { upload } from '../../middlewares/upload.js';
 import { uploadControllers } from './upload.controller.js';
-import { uploadVideo } from '../../middlewares/uploadVideo.js';
-import { uploadVideoController } from './uploadVideo.controller.js';
+
 
 const router = express.Router();
 
@@ -26,12 +25,6 @@ router.post(
   '/document',
   upload.single('file'),
   uploadControllers.uploadDocument
-);
-
-router.post(
-  '/video',
-  uploadVideo.single('file'),
-  uploadVideoController
 );
 
 // Delete file from Cloudinary
