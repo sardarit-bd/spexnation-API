@@ -12,7 +12,7 @@ const uploadSingleImage = async (req, res) => {
 
         const result = await uploadServices.uploadSingleFile(
             req.file.buffer,
-            'properties'
+            'spexnation'
         );
 
         res.status(200).json({
@@ -40,7 +40,7 @@ const uploadMultipleImages = async (req, res) => {
 
         const results = await uploadServices.uploadMultipleFiles(
             req.files,
-            'properties'
+            'spexnation'
         );
 
         res.status(200).json({
@@ -69,7 +69,7 @@ const uploadDocument = async (req, res) => {
 
         const result = await uploadServices.uploadSingleFile(
             req.file.buffer,
-            'properties',
+            'spexnation',
             'raw'
         );
 

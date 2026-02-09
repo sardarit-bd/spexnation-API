@@ -3,6 +3,9 @@ import { AuthRoutes } from "../modules/auth/auth.route.js";
 import { UploadRoutes } from "../modules/upload/upload.routes.js";
 
 import { UsersRoutes } from "../modules/users/users.route.js";
+import { createRequire } from 'module';
+
+const require = createRequire(import.meta.url);
 
 export const router = Router()
 

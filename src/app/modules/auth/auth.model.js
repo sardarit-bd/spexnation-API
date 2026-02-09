@@ -2,7 +2,9 @@ import { model, Schema } from "mongoose";
 
 export const Role = {
     ADMIN: 'admin',
-    SUPER_ADMIN: 'super_admin'
+    SUPER_ADMIN: 'super_admin',
+    CUSTOMER: 'customer',
+    STUFF: 'stuff'
 }
 
 const userSchema = new Schema({
@@ -20,7 +22,7 @@ const userSchema = new Schema({
     },
     role: {
         type: String,
-        default: Role.TENANT
+        default: Role.CUSTOMER
     },
     verified: {
         type: Boolean,

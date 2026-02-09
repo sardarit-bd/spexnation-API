@@ -5,7 +5,7 @@ import bcryptjs from "bcryptjs";
 import { createUserTokens } from "../../utils/userTokens.js";
 import { User } from "./auth.model.js";
 import { envVars } from "../../config/env.js";
-import { sendResetPasswordEmail } from "../../utils/sendEmail.js";
+import { sendResetPasswordEmail, sendVerifyCodeEmail } from "../../utils/sendEmail.js";
 import jwt from 'jsonwebtoken'
 
 const createUser = async (payload) => {
@@ -23,6 +23,7 @@ const createUser = async (payload) => {
 
   const user = await User.create({
     email,
+    verified: true,
     password: hashPassword,
     ...rest,
   });
@@ -132,7 +133,37 @@ export const forgotPassword = async (payload) => {
   return true
 }
 
+export const sendVerifyCode = async (payload) => {
+  const { email } = payload;
+  const user = await User.findOne({ email });
 
+  if (!user) {
+    throw new AppError(httpStatus.NOT_FOUND, "Use does not found.")
+  }
+
+  // generate random 4 digit code and store in database with expiry time of 10 minutes
+
+  const resetCode = 2232
+  await sendVerifyCodeEmail(user.email, resetCode);
+  return true
+}
+export const verifyCode = async (payload) => {
+  const { email, code } = payload;
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    throw new AppError(httpStatus.NOT_FOUND, "Use does not found.")
+  }
+
+  // generate random 4 digit code and store in database with expiry time of 10 minutes
+
+  if (code !== "2232") {
+    throw new AppError(httpStatus.BAD_REQUEST, "Invalid Code")
+  }
+  user.verified = true;
+  await user.save();
+  return true
+}
 export const resetPassword = async (payload, decodedToken) => {
   const { password } = payload;
 
@@ -157,5 +188,7 @@ export const AuthServices = {
   changePassword,
   resetPassword,
   forgotPassword,
-  deleteMe
+  deleteMe,
+  sendVerifyCode,
+  verifyCode
 }
